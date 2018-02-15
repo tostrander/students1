@@ -7,6 +7,9 @@ ini_set('display_errors', TRUE);
 require_once('vendor/autoload.php');
 require_once('model/db-functions.php');
 
+//Start session AFTER autoload
+session_start();
+
 //Create an instance of the Base class
 $f3 = Base::instance();
 $f3->set('DEBUG', 3);
@@ -23,6 +26,14 @@ $f3->route('GET /', function($f3) {
     //load a template
     $template = new Template();
     echo $template->render('views/all-students.html');
+});
+
+//Define a route to view a student summary
+$f3->route('GET /summary', function() {
+
+    //load a template
+    $template = new Template();
+    echo $template->render('views/view-student.html');
 });
 
 //Define a route to add a student
@@ -55,7 +66,11 @@ $f3->route('GET|POST /add', function($f3) {
         $success = addStudent($sid, $last, $first, $birthdate,
             $gpa, $advisor);
         if($success) {
-            $f3->reroute('/');
+            $student = new Student($sid, $last, $first, $birthdate,
+                $gpa, $advisor);
+            $_SESSION['student'] = $student;
+
+            $f3->reroute('/summary');
         }
     }
 
