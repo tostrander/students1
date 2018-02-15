@@ -3,7 +3,7 @@
 <ol>
 <repeat group="{{ @students }}" value="{{ @student }}">
     <li>{{ @student['last'] }}, {{ @student['first'] }}</li>
-    <li>{{ @student['last'] . ", " . @student['first'] }}</li>
-    {{ @SESSION['student']->getName() }}
 </repeat>
 </ol>
+
+<a href="{{ @BASE }}/add">Add a Student</a>

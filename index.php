@@ -25,7 +25,44 @@ $f3->route('GET /', function($f3) {
     echo $template->render('views/all-students.html');
 });
 
+//Define a route to add a student
+$f3->route('GET|POST /add', function($f3) {
 
+    //print_r($_POST);
+    /*
+     * Array (  [sid] => 5678
+     *          [last] => Shin
+     *          [first] => Jen
+     *          [birthdate] => 2000-08-08
+     *          [gpa] => 4.0
+     *          [advisor] => 1
+     *          [submit] => Submit )
+     */
+
+    if(isset($_POST['submit'])) {
+
+        //Get the form data
+        $sid = $_POST['sid'];
+        $last = $_POST['last'];
+        $first = $_POST['first'];
+        $birthdate = $_POST['birthdate'];
+        $gpa = $_POST['gpa'];
+        $advisor = $_POST['advisor'];
+
+        //Validate the data
+
+        //Add the student
+        $success = addStudent($sid, $last, $first, $birthdate,
+            $gpa, $advisor);
+        if($success) {
+            $f3->reroute('/');
+        }
+    }
+
+    //load a template
+    $template = new Template();
+    echo $template->render('views/add-student.html');
+});
 
 //Run fat free
 $f3->run();

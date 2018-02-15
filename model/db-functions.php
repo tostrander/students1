@@ -8,7 +8,7 @@ function connect()
         //Instantiate a database object
         $dbh = new PDO(DB_DSN, DB_USERNAME,
             DB_PASSWORD);
-        echo "Connected to database!!!";
+        //echo "Connected to database!!!";
         return $dbh;
     } catch (PDOException $e) {
         echo $e->getMessage();
@@ -35,4 +35,30 @@ function getStudents()
     $result = $statement->fetchAll(PDO::FETCH_ASSOC);
     //print_r($result);
     return $result;
+}
+
+function addStudent($sid, $last, $first, $birthdate, $gpa, $advisor)
+{
+    global $dbh;
+
+    //1. define the query
+    $sql = "INSERT INTO student
+            VALUES (:sid, :last, :first, :birthdate, :gpa, :advisor)";
+
+    //2. prepare the statement
+    $statement = $dbh->prepare($sql);
+
+    //3. bind parameters
+    $statement->bindParam(':sid', $sid, PDO::PARAM_STR);
+    $statement->bindParam(':last', $last, PDO::PARAM_STR);
+    $statement->bindParam(':first', $first, PDO::PARAM_STR);
+    $statement->bindParam(':birthdate', $birthdate, PDO::PARAM_STR);
+    $statement->bindParam(':gpa', $gpa, PDO::PARAM_STR);
+    $statement->bindParam(':advisor', $advisor, PDO::PARAM_STR);
+
+    //4. execute the statement
+    $success = $statement->execute();
+
+    //5. return the result
+    return $success;
 }
