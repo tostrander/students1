@@ -29,8 +29,10 @@ function getStudents()
     //3. bind parameters
 
     //4. execute the statement
-    $result = $statement->execute();
+    $statement->execute();
 
     //5. return the result
+    $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+    //print_r($result);
     return $result;
 }

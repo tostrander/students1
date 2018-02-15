@@ -1,1 +1,8 @@
 <h1>Student List</h1>
+
+<ol>
+<repeat group="{{ @students }}" value="{{ @student }}">
+    <li>{{ @student['last'] }}, {{ @student['first'] }}</li>
+
+</repeat>
+</ol>
