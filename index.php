@@ -13,11 +13,22 @@ $f3->set('DEBUG', 3);
 //Define a default route
 $f3->route('GET /', function() {
 
-    echo "hello";
+    require("/home/tostrand/config.php");
+
+    try {
+        //Instantiate a database object
+        $dbh = new PDO(DB_DSN, DB_USERNAME,
+            DB_PASSWORD );
+        echo "Connected to database!!!";
+    }
+    catch (PDOException $e) {
+        echo $e->getMessage();
+        return;
+    }
 
     //load a template
-    //$template = new Template();
-    //echo $template->render('views/info.html');
+    $template = new Template();
+    echo $template->render('views/all-students.html');
 });
 
 
