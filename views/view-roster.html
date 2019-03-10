@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        td {
+            border: 1px black solid;
+            padding: 0.3em;
+        }
+    </style>
+</head>
+<body>
+    <h2>Class Rosters</h2>
+
+    <label>Select a Class:
+        <select id="class-selector">
+            <option value="none">-- Select a class --</option>
+            <repeat group="{{ @classes }}" value="{{ @class }}">
+                <option value="{{ @class['classid'] }}">{{ @class['abbrev'] }}, {{ @class['title'] }}</option>
+            </repeat>
+        </select>
+    </label><br>
+
+    <check if="{{ sizeof(@roster) > 0 }}">
+    <hr>
+
+    <h3>{{ @details['abbrev'] }} - {{ @details['title'] }}</h3>
+    <table>
+
+        <tr>
+            <th>SID</th>
+            <th>Name</th>
+            <th>Grade</th>
+        </tr>
+
+        <repeat group="{{ @roster }}" value="{{ @student }}">
+            <tr>
+                <td>{{ @student['sid'] }}</td>
+                <td>{{ @student['last'] }}, {{ @student['first'] }}</td>
+                <td>{{ @student['grade'] }}</td>
+            </tr>
+        </repeat>
+
+    </table>
+    </check>
+
+    <script src="//code.jquery.com/jquery.js"></script>
+    <script>
+        $("#class-selector").on("change", function(){
+            var courseId = $(this).val();
+            window.location.replace("{{ @BASE }}/roster/"+courseId);
+        });
+    </script>
+</body>
+</html>

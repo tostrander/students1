@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <h3>Class Rosters</h3>
+
+    <label>Select a Class:
+        <select id="class-selector">
+            <repeat group="{{ @classes }}" value="{{ @class }}">
+                <option value="{{ @class['classid'] }}">{{ @class['abbrev'] }}, {{ @class['title'] }}</option>
+            </repeat>
+        </select>
+    </label>
+
+    <div id="class-roster"></div>
+
+
+    <script>
+        $("#class-selector").on("change", function(){
+            var courseId = $(this).val();
+            $("#class-roster").load("model/class-roster-ajax.php", { courseId: courseId });
+        });
+    </script>
+</body>
+</html>
+
