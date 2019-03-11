@@ -33,7 +33,7 @@ $f3->route('GET /roster', function($f3) {
     $f3->reroute('roster/0');
 });
 
-//***Define a route to view a class roster***
+//*** Define a route to view a class roster***
 $f3->route('GET /roster/@courseid', function($f3, $params) {
 
     global $db;
@@ -55,6 +55,19 @@ $f3->route('GET /roster/@courseid', function($f3, $params) {
 
     $template = new Template();
     echo $template->render('views/view-roster.html');
+});
+
+//*** Define a route to view a class roster***
+$f3->route('GET /rosterx', function($f3, $params) {
+
+    global $db;
+
+    //get all classes
+    $classes = $db->getClasses();
+    $f3->set('classes', $classes);
+
+    $template = new Template();
+    echo $template->render('views/view-roster-ajax.html');
 });
 
 //Define a route to view a student summary
